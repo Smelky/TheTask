@@ -35,10 +35,8 @@ public class AddServlet extends HttpServlet {
             if (user == null) {
                 user = new User(id, name, password);
                 model.add(user);
-                req.setAttribute("userForAddition", user);
-            } else {
-                req.setAttribute("userForAddition", user);
             }
+            req.setAttribute("userForAddition", user);
         }
 
         doGet(req, resp);
