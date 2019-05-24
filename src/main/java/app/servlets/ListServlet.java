@@ -1,6 +1,6 @@
 package app.servlets;
 
-import app.entities.User;
+import app.entities.Product;
 import app.model.Model;
 
 import javax.servlet.RequestDispatcher;
@@ -17,10 +17,10 @@ public class ListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Model model = Model.getInstance();
-        List<User> listOfUsers = model.getListOfUsers();
+        List<Product> listOfProducts = model.getListOfProducts();
 
-        if (!listOfUsers.isEmpty()) {
-            req.setAttribute("listOfUsers", listOfUsers);
+        if (!listOfProducts.isEmpty()) {
+            req.setAttribute("listOfProducts", listOfProducts);
         }
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/list.jsp");

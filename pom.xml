@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.javarush.info.fatfaggy</groupId>
+    <groupId>MyTask</groupId>
     <artifactId>my-super-project</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
     <build>
         <plugins>
             <plugin>
@@ -18,6 +19,46 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <workDirectory>target/overlay-war-folder</workDirectory>
+                    <overlays>
+                        <overlay>
+                            <groupId>test_war_exploded</groupId>
+                            <artifactId>MANIFEST</artifactId>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <attachClasses>true</attachClasses>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <workDirectory>target/overlay-war-folder</workDirectory>
+                    <overlays>
+                        <overlay>
+                            <groupId>test_war_exploded</groupId>
+                            <artifactId>my-super-project</artifactId>
+                            <excludes>
+                                <exclude>WEB-INF/lib/*.jar</exclude>
+                            </excludes>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -27,6 +68,31 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>test_war_exploded</groupId>
+            <artifactId>MANIFEST</artifactId>
+            <type>war</type>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>test_war_exploded</groupId>
+            <artifactId>MANIFEST</artifactId>
+            <version>1.1</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>test_war_exploded</groupId>
+            <artifactId>MANIFEST</artifactId>
+            <version>1.1</version>
+            <type>jar</type>
+            <classifier>classes</classifier>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -46,5 +112,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

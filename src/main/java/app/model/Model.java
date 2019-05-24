@@ -1,6 +1,6 @@
 package app.model;
 
-import app.entities.User;
+import app.entities.Product;
 
 import javax.servlet.http.HttpServlet;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Map;
 public class Model extends HttpServlet {
     private static Model instance = new Model();
 
-    private Map<Integer, User> model;
+    private Map<String, Product> model;
 
     public static Model getInstance() {
         return instance;
@@ -21,15 +21,15 @@ public class Model extends HttpServlet {
         model = new HashMap<>();
     }
 
-    public void add(User user) {
-        model.put(user.getId(), user);
+    public void add(Product product) {
+        model.put(product.getId(), product);
     }
 
-    public List<User> getListOfUsers() {
+    public List<Product> getListOfProducts() {
         return new ArrayList<>(model.values());
     }
 
-    public void delete(User user) {
+    public void delete(Product user) {
         model.remove(user.getId());
     }
 
@@ -37,7 +37,7 @@ public class Model extends HttpServlet {
         return model.size();
     }
 
-    public Map<Integer, User> getModel() {
+    public Map<String, Product> getModel() {
         return model;
     }
 }

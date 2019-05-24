@@ -1,6 +1,6 @@
 package app.servlets;
 
-import app.entities.User;
+import app.entities.Product;
 import app.model.Model;
 
 import javax.servlet.RequestDispatcher;
@@ -16,7 +16,7 @@ import java.util.List;
 public class RemoveData extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/delete.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/admin.jsp");
         requestDispatcher.forward(req, resp);
     }
 
@@ -24,27 +24,17 @@ public class RemoveData extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idForRemove = req.getParameter("Id");
         String nameForRemove = req.getParameter("name");
-        String passwordForRemove = req.getParameter("pass");
 
-        if (passwordForRemove != null && !passwordForRemove.isEmpty() & nameForRemove != null && !nameForRemove.isEmpty() &
+        if (nameForRemove != null && !nameForRemove.isEmpty() &
                 idForRemove != null && !idForRemove.isEmpty()) {
-            int id = Integer.parseInt(idForRemove);
             Model model = Model.getInstance();
-            List<User> listOfUsers = model.getListOfUsers();
+            List<Product> listOfUsers = model.getListOfProducts();
             req.setAttribute("listOfUsers", listOfUsers);
-            User user = new User(id, nameForRemove, passwordForRemove);
-            for (int i = 0; i < model.size(); i++) {
-                if (model.getModel().get(user.getId()) != null) {
-                    if (model.getModel().get(user.getId()).equals(user)) {
-                        model.delete(user);
-                        req.setAttribute("userForRemove", user);
-                    }
-                } else {
-                    req.setAttribute("userForRemove", user);
-                }
-            }
-        }
+            Product product = new Product(idForRemove, nameForRemove);
 
+            model.delete(product);
+            req.setAttribute("userForRemove", product);
+        }
         doGet(req, resp);
     }
 }
